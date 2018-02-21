@@ -8,7 +8,12 @@ var dir = "./15MinCandleData";
 // var data = require("./15MinCandleData/ICICIPRULI.json");
 // console.log(data.candles.length);
 
-// connection.connect();
+connection.connect();
 // DB_data_entry.insertCompanies(connection, dir);
-Hangingman.BearishHanginMan(connection);
-// connection.end();
+// Hangingman.BearishHanginMan(connection);
+
+connection.query("Select * from 15_min_candles t1 Order by t1.company_id, t1.timestamp", function(error, results, fields){
+	if(error)throw error;
+	console.log(results);
+})
+connection.end();
