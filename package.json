@@ -9,6 +9,8 @@
   "author": "Laksh Dang",
   "license": "ISC",
   "dependencies": {
-    "mysql": "^2.15.0"
+    "async": "^2.6.0",
+    "mysql": "^2.15.0",
+    "sync-each": "^1.0.1"
   }
 }
