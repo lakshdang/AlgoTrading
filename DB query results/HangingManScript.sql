@@ -1,21 +1,21 @@
 -- SET @row_number = 0;
 -- 
--- 
 -- Create Table temp as(
 --  SELECT 
 -- 	*, (@row_number:=@row_number + 1) AS temp_id
 --  	FROM
 --  		15_min_candles
 --  	ORDER BY
---  		company_id, timestamp);
-        
--- Select * from temp;
-
+--  		company_id, timestamp);-- 
+--         
+-- -- Select * from temp;
+-- 
 -- create index temp_id_index on temp (temp_id);
 
 
 
 -- Select t1.temp_id, count(t1.temp_id) from
+
 Select t2.id_15_min_candles, t2.timestamp, t2.Open, t2.Close, t2.High, t2.Low, t2.Volume, t1.id_15_min_candles, t1.timestamp, t1.Open, t1.Close, t1.High, t1.Low, t1.Volume from
 (Select t1.temp_id, t2.id_15_min_candles, t2.timestamp, t2.Open, t2.Close, t2.High, t2.Low, t2.Volume from
 -- Select t1.company_id, count(t1.company_id) from
@@ -55,9 +55,14 @@ temp t2
 on
 t1.temp_id = t2.temp_id
 
+
+
 -- GROUP BY
 -- t1.temp_id;
 ;
+
+
+-- Select * from 15_min_candles t1 where weekday(t1.timestamp) = 5;
 
 
 -- Drop table temp;
