@@ -8,4 +8,4 @@
 
 -- Select Close from temp Where temp_id = 27;
 
-Select * from temp;
+Select * from temp Where company_id in (25, 29,30, 56, 57);

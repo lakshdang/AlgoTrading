@@ -7,12 +7,12 @@ module.exports = {
 				connection.end();
 				throw error;
 			}
-			connection.end();
+			// connection.end();
 			var candles = results;
 			var totalCandles = results.length;
 			var idx = 0;
 			var MACDcandles = [];
-			while(idx<totalCandles && candles[idx].company_id < 2){
+			while(idx<totalCandles && candles[idx].company_id < 222){
 				var company_count = 0
 				var curr_company = candles[idx].company_id;
 				var avg_first_prev_12 = 0;		
@@ -49,7 +49,8 @@ module.exports = {
 				//EMA_26 & EMA_12 for 27th candle as per definition
 				curr_EMA_26 = (candles[idx+26].Close - avg_first_prev_26)*0.0741 + avg_first_prev_26;
 				curr_EMA_12 = (candles[idx+26].Close - avg_first_prev_12)*0.1538 + avg_first_prev_12;
-				console.log(curr_EMA_26, curr_EMA_12);
+				// console.log(curr_EMA_26, curr_EMA_12);
+
 				//Calculate average MACD, EMA_26 & EMA_12 as per definitions for candles in the range [28-38)
 				for(i=idx+27; i<=idx+35; i++){
 					prev_EMA_26 = curr_EMA_26;
@@ -74,7 +75,10 @@ module.exports = {
 				currSign = curr_MACD - curr_EMA_09;
 
 				idx += 37;
+
 				// console.log(curr_EMA_26, curr_EMA_12, curr_EMA_09, curr_MACD, curr_Sign);
+
+				// Cancluate EMA_26/EMA_12/EMA_09 for remaining company candles
 				while(idx<totalCandles && candles[idx].company_id == curr_company){
 					prev_EMA_26 = curr_EMA_26;
 					prev_EMA_12 = curr_EMA_12;
@@ -96,6 +100,11 @@ module.exports = {
 				// console.log();
 			}
 			console.log(MACDcandles);
+			connection.query('Select * from temp Where id_15_min_candles in (?)', [MACDcandles], function(error, results, fields){
+				if(error)throw error;
+				connection.end();
+				console.log(results);
+			})
 		});
 	}
 }
